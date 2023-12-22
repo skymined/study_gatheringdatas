@@ -1,0 +1,15 @@
+# 전체  : div.info
+
+# 상품 제목 : div.info > em > a
+# itembest_T > ul.uxb-img.first > li.first > div > div.info > em > a
+
+# 판매원가 : li.c_price
+# itembest_T > ul.uxb-img.first > li.first > div > div.info > ul > li.c_price
+
+# 변경가격 : span.sale
+# itembest_T > ul.uxb-img.first > li.first > div > div.info > ul > li.d_price > span.sale
+
+# 배송방법 : div.icons> div
+# itembest_T > ul.uxb-img.first > li:nth-child(2) > div > div.info > div.icon > div > div
+
+
