@@ -36,9 +36,10 @@ for element_item in element_bundle :
 
     # 배송방법
     try : 
-        element_dilivery = element_item.find_element(by=By.CSS_SELECTOR, value = "div.icon > div")
-        dilivery = element_dilivery.text.split()
+        element_delivery = element_item.find_element(by=By.CSS_SELECTOR, value = "div.icon > div")
+        delivery = element_delivery.text.split()
+        delivery_result = ','.join(delivery)
     except :
-        dilivery = ""
-    print("Delivery Way : {}".format(dilivery))
+        delivery = ""
+    print("Delivery Way : {}".format(delivery_result))
     pass
