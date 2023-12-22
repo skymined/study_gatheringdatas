@@ -1,0 +1,8 @@
+
+# url : https://github.com/login
+
+# login : #login_field
+
+# password :#password
+
+# button : div > input.btn.btn-primary.btn-block.js-sign-in-button
