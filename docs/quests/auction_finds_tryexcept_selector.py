@@ -43,3 +43,7 @@ for element_item in element_bundle :
         delivery = ""
     print("Delivery Way : {}".format(delivery_result))
     pass
+
+
+
+browswer.quit()
