@@ -1,4 +1,4 @@
-from selenium import webdriver # 
+from selenium import webdriver 
 browser = webdriver.Chrome()
 import time
 
@@ -14,7 +14,7 @@ element_body = browser.find_element(by=By.CSS_SELECTOR, value="body") # body라�
 previous_scrollHeight = 0
 while True : 
     element_body.send_keys(Keys.END)
-    current_scrollHeight = browser.execute_script("return document.body.scrollHeight")   ###### 이게 뭐노!!!!
+    current_scrollHeight = browser.execute_script("return document.body.scrollHeight")   ###### 이게 뭐노!!!! ######
     if previous_scrollHeight >= current_scrollHeight :
         break
     else :
@@ -22,12 +22,28 @@ while True :
     time.sleep(3)
 pass
 
-writers = element_body.find_elements(by=By.CSS_SELECTOR, value="div.css-eldyae.e10cf2lr1")
-writers_text = [writer.text for writer in writers]
-grades = element_body.find_elements(by=By.CSS_SELECTOR, value="div.css-31ods0.egj9y8a0 > span")
-grade_text = [grade.text for grade in grades]
-contents = element_body.find_elements(by=By.CSS_SELECTOR, value="div.css-2occzs.egj9y8a1 > a > div > span")
-contents_text = [content.text for content in contents]
+comment_element_body = element_body.find_elements(by=By.CSS_SELECTOR, value="div.css-13j4ly.egj9y8a4")
+writers=[]
+grades=[]
+contents=[]
+
+for x in comment_element_body:
+    try:
+        writer = x.find_element(by=By.CSS_SELECTOR, value="div.css-eldyae.e10cf2lr1")
+        writers.append(writer.text)
+    except :
+        writers.append("")
+    try:
+        grade = x.find_element(by=By.CSS_SELECTOR, value="div.css-31ods0.egj9y8a0 > span")
+        grades.append(grade.text)
+    except:
+        grades.append("")
+    try:
+        content = x.find_element(by=By.CSS_SELECTOR, value="div.css-2occzs.egj9y8a1 > a > div > span")
+        contents.append(content.text)
+    except:
+        contents.append("")
+
 
 
 
@@ -41,5 +57,5 @@ mongoClient = MongoClient("mongodb://localhost:27017")
 database = mongoClient["gatheringdatas"]
 watcha_comment_coll = database["watcha_comments"]
 
-for num in range(len(grade_text)):
-    watcha_comment_coll.insert_one({"작성자" : writers_text[num], "별점":grade_text[num], "내용":contents_text[num]})
+for num in range(len(writers)):
+    watcha_comment_coll.insert_one({"작성자" : writers[num], "별점":grades[num], "내용":contents[num]})
