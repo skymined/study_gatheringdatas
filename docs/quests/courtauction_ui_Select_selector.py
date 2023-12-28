@@ -15,18 +15,17 @@ coll_court_location.delete_many({})
 
 # 경매 마당 
 def court(coll_court_location):
-    for x in (3,5,9,11):
+    for x in range(4):
         browser.find_element(by=By.CSS_SELECTOR, value='#menu > h1:nth-child(5) > a').click() #경매 물건 검색
-        location_options = browser.find_element(by=By.CSS_SELECTOR, value='#idJiwonNm')
-        location_list = browser.find_element(by=By.CSS_SELECTOR, value='#idJiwonNm').text.split() # 법원 option들 리스트화
-        Select(location_options).select_by_value(location_list[x]) # 법원 index 내 검색 후
-        location_option = location_list[x]
+        location_option = browser.find_element(by=By.CSS_SELECTOR, value='#idJiwonNm')
+        location_option_value = browser.find_element(by=By.CSS_SELECTOR, value='#idJiwonNm').get_attribute('value')
+        Select(location_option).select_by_value(location_option_value) # 법원 index 내 검색 후
         browser.find_element(by=By.CSS_SELECTOR, value='#contents > form > div.tbl_btn > a:nth-child(1)').click() # 검색 버튼 클릭
         time.sleep(2)
 
         
         for y in(2,4,5,6,7,8,9,10,11):
-            courtscrapping(location_option, coll_court_location)
+            courtscrapping(location_option_value, coll_court_location)
             try:
                 note = ("#contents > div > form > div > div.page2 > a:nth-child({})").format(y)
                 browser.find_element(by=By.CSS_SELECTOR, value=note).click()
