@@ -21,7 +21,7 @@ def put_to_mongo(collection1, collection2, shop_contents) :
     shop_list = database[collection2]
     shop_info.delete_many({})
     shop_list.delete_many({})
-    result = shop_info.insert_one({'lastBuildDate' : shop_contents['lastBuildDate'], 'total':170641, 'start':1, 'display':10})
+    result = shop_info.insert_one({'lastBuildDate' : shop_contents['lastBuildDate'], 'total':shop_contents['total'], 'start':shop_contents['start'], 'display':shop_contents['display']})
     id_relative = result.inserted_id
 
     for i in shop_contents['items'] :
