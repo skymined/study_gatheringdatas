@@ -22,10 +22,7 @@ def item_infor() :
         browser.find_element(by=By.CSS_SELECTOR, value="div > ul > li > div >a").click() # 항목들 클릭
         time.sleep(1)
         # 클릭해서 들어간 곳의 상세 정보 스크래핑
-        try : # 이름
-            element_name = browser.find_element(by=By.CSS_SELECTOR, value="div.c_product_info_title.c_product_info_title_coupon > h1")
-        except :
-            element_name = "None"
+        element_name = browser.find_element(by=By.CSS_SELECTOR, value="div.c_product_info_title.c_product_info_title_coupon > h1")
         try : # 이미지 : #productImg > div > img
             element_image = browser.find_element(by=By.CSS_SELECTOR, value="#productImg > div > img").get_attribute('src')
         except :
@@ -54,34 +51,30 @@ def item_infor() :
         # 리뷰 스크래핑하기
         browser.find_element(by=By.CSS_SELECTOR, value="#tabMenuDetail2").click()
         browser.switch_to.frame("ifrmReview")
-        while True :
-            try :
-                button = browser.find_element(by=By.CSS_SELECTOR, value="#review-list-page-area > div > button")
-                button.click()
-                time.sleep(2)
-            except :
-                break
-        element_body = browser.find_elements(by=By.CSS_SELECTOR, value="#review-list-page-area > ul > li")
-        for element_item in element_body :
-            try : # 작성자 
-                comment_name = element_item.find_element(by=By.CSS_SELECTOR, value="#review-list-page-area > ul > li> dl > dt")
-            except NoSuchElementException :
-                comment_name = 'None'
-            try : # 선택옵션
-                comment_option = element_item.find_element(by=By.CSS_SELECTOR, value='#review-list-page-area > ul > li > div > dl > div >dd')
-            except NoSuchElementException :
-                try : 
-                    comment_option =element_item.find_element(by=By.CSS_SELECTOR, value='#review-list-page-area > ul > li > div > p.option')
+        try :
+            element_body = browser.find_elements(by=By.CSS_SELECTOR, value="#review-list-page-area > ul > li")
+            for element_item in element_body :
+                try : # 작성자 
+                    comment_name = element_item.find_element(by=By.CSS_SELECTOR, value="#review-list-page-area > ul > li> dl > dt")
                 except NoSuchElementException :
-                    comment_option ='None'
-            try : #별점
-                comment_grade = element_item.find_element(by=By.CSS_SELECTOR, value='#review-list-page-area > ul > li> div > p.grade > span > em')
-            except NoSuchElementException :
-                comment_grade ='None'
-            try : # 내용
-                comment_content = element_item.find_element(by=By.CSS_SELECTOR, value = '#review-list-page-area > ul > li > div > div > div.cont_text_wrap > p')
-            except NoSuchElementException :
-                comment_content = 'None'
+                    comment_name = 'None'
+                try : # 선택옵션
+                    comment_option = element_item.find_element(by=By.CSS_SELECTOR, value='#review-list-page-area > ul > li > div > dl > div >dd')
+                except NoSuchElementException :
+                    try : 
+                        comment_option =element_item.find_element(by=By.CSS_SELECTOR, value='#review-list-page-area > ul > li > div > p.option')
+                    except NoSuchElementException :
+                        comment_option ='None'
+                try : #별점
+                    comment_grade = element_item.find_element(by=By.CSS_SELECTOR, value='#review-list-page-area > ul > li> div > p.grade > span > em')
+                except NoSuchElementException :
+                    comment_grade ='None'
+                try : # 내용
+                    comment_content = element_item.find_element(by=By.CSS_SELECTOR, value = '#review-list-page-area > ul > li > div > div > div.cont_text_wrap > p')
+                except NoSuchElementException :
+                    comment_content = 'None'
+        except NoSuchElementException :
+            pass
 
         # 몽고디비에 정보 넣기
 
@@ -97,8 +90,9 @@ def item_infor() :
         browser.back()
         time.sleep(2)
         if NoSuchElementException :
-            break
-    browser.quit()
+            pass
+
 
 
 item_infor()
+browser.quit()
